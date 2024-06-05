@@ -1,0 +1,222 @@
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+#start-meet {
+    cursor: pointer;
+    background-color: #1a73e8;
+    color: white;
+    padding: 15px 30px;
+    font-weight: 600;
+    border: none;
+    font-size: 18px;
+    border-radius: 8px;
+}
+/* change #1a73e8 to disabled blueish color for disabled button*/
+#start-meet:disabled {
+    background-color: #6786af;
+    color: #fff;
+    border-color: #1a73e8;
+    cursor: not-allowed;
+}
+
+
+/* loader */
+.dotscontainerLoad{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .dotLoad {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: #0e77d3;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+  
+  .dotLoad:last-child {
+    margin-right: 0;
+  }
+  
+  .dotLoad:nth-child(1) {
+    animation-delay: -0.3s;
+  }
+  
+  .dotLoad:nth-child(2) {
+    animation-delay: -0.1s;
+  }
+  
+  .dotLoad:nth-child(3) {
+    animation-delay: 0.1s;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(0.8);
+      background-color: #b3d4fc;
+      box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+    }
+  
+    50% {
+      transform: scale(1.2);
+      background-color: #6793fb;
+      box-shadow: 0 0 0 10px rgba(178, 212, 252, 0);
+    }
+  
+    100% {
+      transform: scale(0.8);
+      background-color: #0e77d3;
+      box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+    }
+  }
+/* loader */
+
+/* Popup */
+
+.popupWrapper{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1200;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.1s;
+  z-index: 3555;
+
+  .popupContainer {
+      width: 500px;
+      margin: auto;
+      background: #fff;
+      border: 1px solid #EEEEEE;
+      border-radius: 15px;
+      overflow: hidden;
+  }
+
+  .popupHeader {
+      border-bottom: none;
+      justify-content: flex-end;
+      padding: 15px 20px 0;
+      display: flex;
+      align-items: center;    
+  }
+
+  .close {
+      display: flex;
+      align-items: center;
+      padding: 2px;
+      border: 1px solid var(--grey2);
+      border-radius: 5px;
+      cursor: pointer;
+  }
+
+  .popupBody {
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      min-height: max-content;
+      padding: 0 20px;
+      padding-bottom: 40px;
+      max-height: calc(100vh - 160px);
+      overflow: auto;
+      display: flex;
+      position: relative;
+      align-items: center;
+  }
+
+  .logOutText {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      max-width: 200px;
+      display: block;
+      text-align: center;
+  }
+
+  .buttonWrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      width: 100%;
+  }
+
+  .button {
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 20px;
+      padding: 6px 8px;
+      margin: 0;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--black3);
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      transition: 0.4s ease-in;
+  }
+
+  .RedFillButton {
+      border: 1px solid #E53935;
+      background: #E53935;
+      color: #fff;
+  }
+
+  .GreyFillButton {
+      border: 1px solid #E5E5E5;
+      background: #E5E5E5;
+      color: #121212;
+  }
+
+  .LogoutPopup .buttonWrapper button {
+      padding: 10px 20px;
+      font-size: 14px;
+  }
+  
+}
+
+/*End Popup */
