@@ -228,7 +228,7 @@ const Room = () => {
       .catch((error) => {
         console.error('Error:', error);
       });
-      myMeeting()
+      // myMeeting()
   }, []);
 
   useEffect(() => {
@@ -387,7 +387,7 @@ const Room = () => {
          </div>
         }
             <div
-              // ref={myMeeting}
+              ref={myMeeting}
               style={{ width: '100vw', height: isMobile >= 767 ? '100vh' : 'calc(100vh - 65px)' }}
             >
             </div>
