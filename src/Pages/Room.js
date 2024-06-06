@@ -18,19 +18,19 @@ const Room = () => {
   const [groupCall, setGroupCall]= useState(false)
   const [bgBlack, setBgBlack] = useState(false);
   const [isMobile,setIsMobile] = useState(window.innerWidth)
-
-    /////////////////getPrepped CDN ///////////////////////
-    const logoWhite = "https://cdn.mastersunion.org/assets/GetPreppedLogoBlack.svg"
-    const logoBlack = "https://cdn.mastersunion.org/assets/GetPreppedLogoWhite.svg"
   
-
+  /////////////////getPrepped CDN ///////////////////////
+  const logoWhite = "https://cdn.mastersunion.org/assets/GetPreppedLogoBlack.svg"
+  const logoBlack = "https://cdn.mastersunion.org/assets/GetPreppedLogoWhite.svg"
+  
+  
   ////////////////For Timer///////////////////////////
-
+  
   const [start, setStartTime] = useState(false)
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(30);
   const [isEle, setIsEle] = useState(false);
-
+  
   useEffect(() => {
     if (start) {
       let timer = setInterval(() => {
@@ -44,12 +44,12 @@ const Room = () => {
           redirectUrl()
         }
         // console.log("timer is running2", seconds);
-
+        
       }, 1000);
 
       return () => clearInterval(timer)
     }
-
+    
   }, [start, seconds, minutes]);
 
   useEffect(() => {
@@ -58,20 +58,20 @@ const Room = () => {
       timerDiv.className = "timerDiv";
       timerDiv.style.cssText = 'display: flex; align-items: center; justify-content: flex-start; padding: 10px 8px; color: rgba(255, 255, 255, 0.8); font-weight: 700; font-size: 25px; line-height: 18px; background: #313443; border-radius: 12px;';
       timerDiv.innerHTML = `<span> ${minutes < 10 ? "0" + minutes : minutes}:${seconds < 10 ? "0" + seconds : seconds}</span>`
-
+      
       const timeElement = document.querySelector(".dIzgYQV4CBbzZxzJbwbS");
-
+      
       if (!timeElement?.querySelector(".timerDiv")) {
         timeElement?.appendChild(timerDiv);
       }
     }
   }, [seconds, minutes])
-
+  
   ////////////////////////////////////////////////////////
-
+  
   const query = new URLSearchParams(location.search);
   const { zp, setZP } = useContext(ZPContext);
-
+  
   //get name from query
   // const query = useQuery();
   const name = query.get("name");
@@ -80,13 +80,13 @@ const Room = () => {
     try {
       fetch( URL+`/api/getCallInfo/${room.roomID}/${room.userID}`)
       // fetch(`https://get-prepped-backend.onrender.com/api/getCallInfo/${room.roomID}/${room.userID}`)
-        .then(response => response.json())
-        .then(data => {
+      .then(response => response.json())
+      .then(data => {
           // Use the data from the API
           window.location.href = (data?.Data?.redirectLink)
         })
         .catch((error) => {
-
+          
           console.error('Error:', error);
           // Handle any errors here
         });
@@ -94,22 +94,22 @@ const Room = () => {
       console.log(err)
     }
   }
-
+  
   const agendaCall = () => {
     try {
       fetch( URL+`/api/getCallInfo/${room.roomID}/${room.userID}`)
         .then(response => response.json())
         .then(data => {
-          addAgenda(data?.Data?.call?.agenda ?? meetInfo?.call?.interviewAgenda?.agenda)
+          addAgenda(data?.Data?.call?.agenda ?? data?.Data?.call?.interviewAgenda?.agenda)
         })
         .catch((error) => {
-
+          
           console.error('Error:', error);
           // Handle any errors here
         });
-    } catch (err) {
-      console.log(err)
-    }
+      } catch (err) {
+        console.log(err)
+      }
   }
 
   const addAgenda = (txt) => {
@@ -157,7 +157,7 @@ const Room = () => {
         resolution: ZegoUIKitPrebuilt.ScreenSharingResolution_720P
     },
 
-      onJoinRoom: () => {
+    onJoinRoom: () => {
         agendaCall()
         if (meetInfo?.call?.startedAt) {
           const timerT = new Date(meetInfo?.call?.startedAt)
@@ -165,7 +165,7 @@ const Room = () => {
           const currentTime = new Date();
           // Calculate the difference in minutes
           const differenceInMinutes = (currentTime - timerT) / (1000 * 60);
-
+          
           if (differenceInMinutes < 30) {
             // Set remaining minutes here
             const remainingMinutes = 30 - differenceInMinutes;
@@ -178,7 +178,7 @@ const Room = () => {
 
         }
         console.log("onJoinRoom");
-
+        
       },
 
       onInRoomTextMessageReceived: () => {
@@ -194,7 +194,7 @@ const Room = () => {
         const newButton = document.createElement("button");
         newButton.innerHTML = "Give Feedback";
         newButton.style.cssText = "cursor:pointer;background-color:rgb(26, 115, 232);color:white;padding:15px 30px;margin-top:20px;font-weight:600;border:none;font-size:9px;border-radius:8px;";
-
+        
         // now add it after homeButton
         homeButton.after(newButton);
         newButton.addEventListener("click", () => {
@@ -206,7 +206,7 @@ const Room = () => {
         if (homeButton) {
           homeButton.remove();
         }
-
+        
         console.log("onLeaveRoom");
       },
       branding: {
@@ -214,16 +214,20 @@ const Room = () => {
       },
     });
   }
+  const [content, setContent] = useState("");
 
   useEffect(() => {
     // Call your API
     fetch( URL+`/api/getCallInfo/${room.roomID}/${room.userID}`)
       .then(response => response.json())
       .then(data => {
-        setLoding(false)
         // Use the data from the API
         setMeetInfo(data?.Data)
         setMessage(data?.Message)
+        setLoding(false)
+        if(data?.Data != null){
+          setContent(<div ref={myMeeting}style={{ width: '100vw', height: isMobile >= 767 ? '100vh' : 'calc(100vh - 65px)' }}></div>)
+        }
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -386,11 +390,12 @@ const Room = () => {
           <img src={bgBlack ? logoBlack : logoWhite } alt="" style={{ width: "190px" }} />
          </div>
         }
-            <div
+            {content}
+            {/* <div
               ref={myMeeting}
               style={{ width: '100vw', height: isMobile >= 767 ? '100vh' : 'calc(100vh - 65px)' }}
             >
-            </div>
+            </div> */}
           </div>
         ) :
 
